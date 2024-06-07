@@ -15,12 +15,12 @@ To get started with KeyMon, follow these steps:
 
 2. **Install Python and pip (if not already installed)**:
 ```bash
-sudo apt update
-sudo apt install python3 python3-pip
+   sudo apt update
+   sudo apt install python3 python3-pip
 ```
 3. **Install the Required Library**:
 ```bash
-pip3 install pynput
+   pip3 install pynput
 ```
 
 ## Usage
