@@ -23,8 +23,6 @@ To get started with KeyMon, follow these steps:
    pip3 install pynput
    ```
 
-## Usage
-
 ## Ethical Considerations
 - Use this tool strictly for ethical purposes, such as educational projects or with explicit permission.
 - Obtain explicit consent from individuals before deploying or sharing the keylogger.
